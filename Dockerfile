@@ -1,42 +1,32 @@
 FROM alpine
 
-RUN apk add curl g++ git fortune make pango-dev py-cairo-dev python3 ttf-freemono --no-cache
+RUN apk add curl g++ git fortune make pango-dev py-cairo-dev python3 texinfo ttf-freefont --no-cache
+WORKDIR /build
 RUN git clone https://github.com/erkin/ponysay.git; \
     cd ponysay; \
-    python3 setup.py install --freedom=partial; \
-    cd /; \
-    rm -rf /ponysay; \
-    which ponysay
+    python3 setup.py install --freedom=strict
 
 RUN git clone https://gitlab.com/saalen/ansifilter.git; \
     cd ansifilter; \
     make; \
-    make install; \
-    cd /; \
-    rm -rf /ansifilter; \
-    which ansifilter
+    make install
 
-RUN curl https://imagemagick.org/download/ImageMagick.tar.gz > /ImageMagick.tar.gz; \
-    tar zxvf /ImageMagick.tar.gz; \
-    cd /ImageMagick-*; \
+RUN curl https://imagemagick.org/download/ImageMagick.tar.gz > ImageMagick.tar.gz; \
+    tar zxvf ImageMagick.tar.gz; \
+    cd ImageMagick-*; \
     ./configure --with-pango; \
     make; \
-    make install; \
-    cd /; \
-    rm -rf ImageMagick*; \
-    magick -version
+    make install
 
-RUN apk del curl g++ git make --no-cache
+RUN apk del curl g++ git make --no-cache; \
+    rm -rf /build
 
-ARG SCRIPT=/root/ponysay.sh
-RUN echo "#!/bin/sh" > $SCRIPT; \
-    echo "fortune | ponysay --wrap 96 > /tmp/pony.ansi" >> $SCRIPT; \
-    echo "ansifilter -i /tmp/pony.ansi -o /tmp/pony.pango --pango --font=FreeMono --font-size=44" >> $SCRIPT; \
-    echo "convert -background -border 44 transparent pango:@/tmp/pony.pango /tmp/pony.png" >> $SCRIPT; \
-    chmod +x $SCRIPT
-
-VOLUME /out
+WORKDIR /root
+RUN echo "#!/bin/sh" > ponysay.sh; \
+    echo "fortune | ponysay --wrap 96 > /tmp/pony.ansi" >> ponysay.sh; \
+    echo "ansifilter -i /tmp/pony.ansi -o /tmp/pony.pango --pango --font=FreeMono --font-size=44" >> ponysay.sh; \
+    echo "convert -background -border 44 transparent pango:@/tmp/pony.pango /tmp/pony.png" >> ponysay.sh; \
+    chmod +x ./ponysay.sh
 
 ENTRYPOINT ["/bin/sh"]
-# ENTRYPOINT ["/root/ponysay.sh"]
-# NOTE do I need texinfo?
+# ENTRYPOINT ["ponysay.sh"]
