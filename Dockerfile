@@ -23,10 +23,13 @@ RUN apk del curl g++ git make --no-cache; \
 
 WORKDIR /root
 RUN echo "#!/bin/sh" > ponysay.sh; \
-    echo "fortune | ponysay --wrap 96 > /tmp/pony.ansi" >> ponysay.sh; \
+    echo "fortune | ponysay --wrap 120 > /tmp/pony.ansi" >> ponysay.sh; \
     echo "ansifilter -i /tmp/pony.ansi -o /tmp/pony.pango --pango --font=FreeMono --font-size=44" >> ponysay.sh; \
-    echo "convert -background -border 44 transparent pango:@/tmp/pony.pango /tmp/pony.png" >> ponysay.sh; \
+    echo "convert -background transparent -border 44 pango:@/tmp/pony.pango /tmp/pony.png" >> ponysay.sh; \
+    echo "cp /tmp/pony.png /out/pony.png" >> ponysay.sh; \
     chmod +x ./ponysay.sh
 
-ENTRYPOINT ["/bin/sh"]
-# ENTRYPOINT ["ponysay.sh"]
+VOLUME /out
+
+# ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["./ponysay.sh"]
