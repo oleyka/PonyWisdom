@@ -1,6 +1,6 @@
 # Small pony stable of infinite wisdom
 
-This project brings together `fortune`, `ponysay`, `ansifilter` and `ImageMagick` libraries to
+This project brings together [fortune](http://bxr.su/OpenBSD/games/fortune/), [ponysay](https://github.com/erkin/ponysay), [ansifilter](https://gitlab.com/saalen/ansifilter) and [ImageMagick](https://imagemagick.org/) libraries to
 deliver to you the infinite pony wisdom art in PNG format.
 
 ## To build:
