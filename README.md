@@ -45,6 +45,6 @@ __E.g.__ The following command:
 docker run -v$(pwd):/out oleyka/ponysay -q Supercalifragilisticexpialidocious -s 15 -w 20
 ```
 
-will produce a much smaller file, like shown below:
+will produce a much smaller file (both bit-wise, because of the smaller font size, and width-wise), like shown below:
 
 ![Pony wisdom sample 2, 20Kb](sample-pony2.png)
