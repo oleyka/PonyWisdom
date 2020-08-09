@@ -1,4 +1,7 @@
-# Pony Wisdom coming out of the little docker stable
+# Small pony stable of infinite wisdom
+
+This project brings together `fortune`, `ponysay`, `ansifilter` and `ImageMagick` libraries to
+deliver to you the infinite pony wisdom art in PNG format.
 
 ## To build:
 
@@ -18,7 +21,9 @@ docker push oleyka/ponysay
 docker run -v$(pwd):/out oleyka/ponysay
 ```
 
-This drops a random pony fortune into file `pony.png` in your current directory.
+This drops a random pony fortune into file `pony.png` in your current directory. You might get something like this:
+
+![Pony wisdom sample 1, 85Kb](sample-pony1.png)
 
 ### Additional parameters:
 
@@ -34,3 +39,12 @@ The following optional parameters can be passed to the shell script:
 -w|--wrap <number>:    wrap text at a certain number of characters (default: 120)
 ```
 
+__E.g.__ The following command:
+
+```
+docker run -v$(pwd):/out oleyka/ponysay -q Supercalifragilisticexpialidocious -s 15 -w 20
+```
+
+will produce a much smaller file, like shown below:
+
+![Pony wisdom sample 2, 20Kb](sample-pony2.png)
