@@ -14,7 +14,7 @@ function generate () {
         fortune | ponysay --wrap $WRAP > /tmp/pony.ansi
     fi
     ansifilter -i /tmp/pony.ansi -o /tmp/pony.pango --pango --font=$FONT --font-size=$SIZE
-    convert -background transparent -border $SIZE -depth 8 pango:@/tmp/pony.pango /tmp/pony.png
+    convert -background transparent -border $SIZE pango:@/tmp/pony.pango /tmp/pony.png
     cp /tmp/pony.png /out/pony${SUFFIX}.png
 }
 
