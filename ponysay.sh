@@ -60,7 +60,7 @@ if [ $COUNT -le 1 ]; then
     generate
 else
     SUFFIX_LEN=${#COUNT}
-    for i in $(seq 0 $COUNT); do
+    for i in $(seq 1 $COUNT); do
         PRE_SUFFIX_LEN=$(($SUFFIX_LEN - ${#i}))
         SUFFIX="$(dd if=/dev/zero bs=1 count=${PRE_SUFFIX_LEN} | tr '\0' '0')$i"
         generate $SUFFIX
